@@ -1,3 +1,2 @@
 Kullanılan Paketler
 librosa
-matplotlib
