@@ -1,2 +1,3 @@
 Kullanılan Paketler
 librosa
+.
