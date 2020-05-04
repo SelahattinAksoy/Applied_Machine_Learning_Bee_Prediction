@@ -14,7 +14,7 @@ def FindFileNamesByPath(path,typeofFile):
 
 def ReadLabFile(list_of_sound_file_name):
 
-    timeList_lab_all=[]
+    timeList_lab_all = []
     for j in list_of_sound_file_name:
 
         labFile = open("Data\\" + j[:-4] + ".lab", "r")
@@ -39,7 +39,7 @@ def ReadLabFile(list_of_sound_file_name):
     return timeList_lab_all
 
 
-list_of_sound_file_name=FindFileNamesByPath("Data","wav")
+list_of_sound_file_name = FindFileNamesByPath("Data","wav")
 split_timeList=ReadLabFile(list_of_sound_file_name)
 
 
@@ -54,8 +54,8 @@ def Clean_Wav_File(timeList):
             newAu=newAudio[a[0] * 1000:a[1] * 1000]
             newAu.export("Cleaned Data\\Cleaned_Voice\\" + i + "--" + (a[2])[:-1] + "--" + str(num) + ".wav", format="wav")
 
-            num+=1
-        count+=1
+            num += 1
+        count += 1
 
 
 Clean_Wav_File(split_timeList)
