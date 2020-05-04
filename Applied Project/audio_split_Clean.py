@@ -38,8 +38,10 @@ def ReadLabFile(list_of_sound_file_name):
     return timeList_lab_all
 
 
+
 list_of_sound_file_name = FindFileNamesByPath("Data", "wav")
 split_timeList = ReadLabFile(list_of_sound_file_name)
+
 
 def Clean_Wav_File(timeList):
     Vaw_obj_list = ["CF003 - Active - Day - (214).wav", "CF003 - Active - Day - (215).wav", "CF003 - Active - Day - (216).wav"]
@@ -51,7 +53,6 @@ def Clean_Wav_File(timeList):
         for num, a in enumerate(timeList[counter]):
             newAu = newAudio[a[0] * 1000:a[1] * 1000]
             newAu.export("Cleaned Data\\Cleaned_Voice\\" + i + "--" + (a[2])[:-1] + "--" + str(num) + ".wav", format="wav")
-
 
 
 Clean_Wav_File(split_timeList)
