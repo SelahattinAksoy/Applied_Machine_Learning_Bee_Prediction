@@ -5,23 +5,21 @@ import numpy as np
 import pandas as pd
 from pathlib import Path  #Path lib for looking file in a path
 
+def FindFileNamesByPath(path,typeofFile):
+
+    File_List = [path.name for path in Path(path).rglob('*.'+typeofFile)]
+    return [(result, (result.split("--")[1])) for result in File_List]
+
 
 def Librosa(path):
     y, sr = librosa.load("Cleaned Data\Cleaned_Voice\\"+path, sr=None)
-    return y,sr
-def FindFileNamesByPath(path,typeofFile):
-
-    File_List=[path.name for path in Path(path).rglob('*.'+typeofFile)]
-    return [(result,(result.split("--")[1])) for result in File_List]
+    return y, sr
 
 
-result=FindFileNamesByPath("Cleaned Data\Cleaned_Voice","wav")
-print(result)
-print(len(result))
-def CreateLibrosa():
-
-    librosa_value=[(Librosa(path[0]),path[1]) for path in result ]
+def CreateLibrosa(allDataName):
+    librosa_value = [(Librosa(path[0]), path[1]) for path in allDataName]
     return librosa_value
+
 
 fn_list_i = [
     feature.chroma_stft,
@@ -44,23 +42,28 @@ def get_feature_vector(y, sr):
     return feature_vector
 
 
-
-def get_Feature_extract():
-    out=[ (get_feature_vector(x[0][0],x[0][1]),x[1])  for x in CreateLibrosa()]
+def get_Feature_extract(allData):
+    out = [(get_feature_vector(librosaValue[0][0], librosaValue[0][1]), librosaValue[1])
+           for librosaValue in CreateLibrosa(allData)]
     return out
 
 
-geto=get_Feature_extract()
+result = FindFileNamesByPath("Cleaned Data\Cleaned_Voice","wav")
+print(result)
+print(len(result))
+geto = get_Feature_extract(result)
 
-
-bees=[]
-vectors=[]
+classBeeNoBee = []
+vectors = []
 for i in geto:
     vectors.append(i[0])
-    bees.append(i[1])
+    classBeeNoBee.append(i[1])
 
-framne=pd.DataFrame(librosa.util.normalize(vectors),columns=["chroma_stft","spectral_centroid","spectral_bandwidth","spectral_rolloff","rmse","zero_crossing_rate"])
-framne["class"]=bees
+frame = pd.DataFrame(librosa.util.normalize(vectors), columns=["chroma_stft", "spectral_centroid",
+                                                                "spectral_bandwidth", "spectral_rolloff", "rmse",
+                                                                "zero_crossing_rate"])
+print(frame)
+frame["class"] = classBeeNoBee
 
-framne.to_csv ("Cleaned Data\\cleaned_csv_file.csv", index = False, header=True)
+frame.to_csv("Cleaned Data\\cleaned_csv_file.csv", index=False, header=True)
 
