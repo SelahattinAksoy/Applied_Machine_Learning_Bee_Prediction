@@ -48,7 +48,7 @@ def get_Feature_extract(allData):
     return out
 
 
-result = FindFileNamesByPath("Cleaned Data\Cleaned_Voice","wav")
+result = FindFileNamesByPath("Cleaned Data\Cleaned_Voice", "wav")
 print(result)
 print(len(result))
 geto = get_Feature_extract(result)
